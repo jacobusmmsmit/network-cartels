@@ -188,7 +188,7 @@ function ns(npeers=4, α=0.2)
         end
         p
     end
-    new_strategies = best_response_dynamics(cfn, strategies, dm; n = 3)
+    new_strategies = best_response_dynamics(cfn, strategies, dm; n = 1)
     NE_costs = evaluate_cost(cfn, 1:npeers, new_strategies, dm)
     NE_social_cost = sum(NE_costs)
     # @show NE_costs
@@ -214,6 +214,7 @@ function ns(npeers=4, α=0.2)
     # end
 
     nav_score = navigability(construct_graph(new_strategies, dm), dm, 1000)
+    return nav_score
     # @show nav_score
     
     # soc_opt_strats, soc_opt_cost = social_optimum(cfn, dm)
@@ -243,7 +244,7 @@ end
 # main(5, 1.0)
 
 function main()
-    N = 13
+    N = 9
     ms = zeros(N)
     ml = zeros(N)
     for i in 2:N
@@ -261,7 +262,13 @@ function main()
     ms, ml
 end
 ms, ml = main()
+plot(ml)
 
 ## TODO: Implement check for Nash Equilibrium
-## TODO: Implement find social optimum
-## TODO: Implement navigability score (return success/failure)
+## TODO: Implement sample peers from hyperbolic space
+## TODO: Implement hyperbolic distances
+## TODO: Decide on inputs such as
+# number of best response dynamics,
+# number of peers,
+# space size,
+# null model
