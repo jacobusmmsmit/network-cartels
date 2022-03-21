@@ -40,27 +40,31 @@ end
 ur_wo(ur, without) = Iterators.flatten((ur.start:(without-1), (without+1):ur.stop))
 
 function greedy_navigate(source, destination, graph, distm)
+    success = true
     cur = source
     prev = -1
     route = [cur]
-    while cur != destination
+    i = 1
+    while cur != destination && i <= size(distm, 1)
+        i += 1
         possible_next = setdiff(graph.weights[:, cur].nzind, cur)
         if length(possible_next) == 0
+            print("Cannot navigate from $source to $destination: ")
+            println("$cur is an absorbing node.")
+            success = false
             break
         end
-        # println(map(pn -> distm[pn, destination], possible_next))
-        # @show possible_next
-        # @show distm
         next = possible_next[findmin(pn -> distm[pn, destination], possible_next)[2]]
         if next == prev
-            @show next
-            @show prev
+            success = false
+            print("Cannot navigate from $source to $destination: ")
+            println("$cur and $next form a greedy loop.")
             break
         end
         append!(route, next)
         prev, cur = cur, next
     end
-    route
+    route, success
 end
 
 function main(npeers=4, α=0.2)
@@ -69,13 +73,15 @@ function main(npeers=4, α=0.2)
     dm = [diste(p1, p2) for (p1, p2) in Iterators.product(peers, peers)]
     fn = (player, edges, sps) -> p2p_cost(player, edges, sps, dm, α)
 
-    strategies = [sample(1:npeers, rand(1:npeers), replace=false) for _ in 1:npeers]
+    strategies = [sample(1:npeers, rand(1:k), replace=false) for k in 1:npeers]
     g = construct_graph(strategies, dm)
     ds = floyd_warshall_shortest_paths(g)
     sps = ds.dists # from i to j
 
     costs = evaluate_cost(fn, 1:npeers, strategies, sps)
     social_cost = sum(costs)
+    @show costs
+    @show social_cost
 
     println(greedy_navigate(1, 2, g, dm))
 
@@ -101,3 +107,7 @@ function main(npeers=4, α=0.2)
 end
 
 main(10)
+
+## TODO: Implement check for Nash Equilibrium
+## TODO: Implement find social optimum
+## TODO: Implement navigability score (return success/failure)
