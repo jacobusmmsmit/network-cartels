@@ -10,7 +10,6 @@ function generate_hyperbolic_graph(N::Int, α, C, T)
     if α < 0.5
         throw(ArgumentError("α must be greater than 1/2"))
     end
-    
     V = [(0.0, 0.0) for _ in 1:N]
     E = Tuple{Tuple{Float64, Float64}, Tuple{Float64, Float64}}[]
     R = 2log(N) + C
@@ -19,9 +18,7 @@ function generate_hyperbolic_graph(N::Int, α, C, T)
     weights = Float64[]
     for i in 1:N
         θ = rand(Uniform(0, 2π))
-        # r = (acosh(1 + (cosh(α*R) - 1))/α) * rand()
         r = asinh((rand()/α)*(cosh(α*R)-1))/α
-        # asinh((y*(cosh(a*R)-1))/a)/a
         V[i] = (r, θ)
     end
     for i in 1:N, j in i+1:N
@@ -44,8 +41,8 @@ function generate_hyperbolic_graph(N::Int, α, C, T)
     return SimpleWeightedDiGraph(sources, dests, weights), (V, E)
 end
 
-g, (peers, edges) = generate_hyperbolic_graph(100, 1.0, 1.0, 1.0)
+g, (peers, edges) = generate_hyperbolic_graph(100, 0.7, 1.0, 1.0)
 begin
     p = plot(legend=false, aspect_ratio=1.0, proj=:polar)
-    scatter!(first.(peers), last.(peers), series_annotations=text.(1:length(peers), :bottom))
+    scatter!(last.(peers), first.(peers), series_annotations=text.(1:length(peers), :bottom))
 end
