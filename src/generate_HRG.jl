@@ -1,3 +1,5 @@
+export generate_hyperbolic_graph
+
 using Graphs
 using SimpleWeightedGraphs
 using StatsBase

@@ -1,3 +1,5 @@
+export construct_graph, evaluate_cost, p2p_cost, best_response, best_response_dynamics, social_optimum
+
 function construct_graph(strategies, distm)
     sources = inverse_rle(1:length(strategies), length.(strategies))
     destinations = collect(Iterators.flatten(strategies))
