@@ -8,4 +8,4 @@ Pkg.activate(".")
 Pkg.instantiate()
 ```
 
-Now the code from `src` can be run. Files beginning with `plot` produce plots included in the paper.
+Now the code from the `src/` folder can be run. Files beginning with `plot` produce plots included in the paper.
