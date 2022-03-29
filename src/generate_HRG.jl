@@ -47,5 +47,7 @@ function generate_hyperbolic_graph(N::Int, α, ν, T)
         end
     end
     # Return graph and embedding
-    return SimpleWeightedDiGraph(sources, dests, weights), (V, E)
+    # return SimpleWeightedDiGraph(sources, dests, weights), (V, E)
+
+    return SimpleDiGraph([Edge(i) for i in zip(sources, dests)]), (V, E)
 end
