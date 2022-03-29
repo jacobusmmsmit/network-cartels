@@ -8,4 +8,6 @@ Pkg.activate(".")
 Pkg.instantiate()
 ```
 
-Now the code from the `src/` folder can be run. Files beginning with `plot` produce plots included in the paper.
+Now the code from the `src/` folder can be run. Relevant files to reproduce results in paper:
+* `scripts/plot_avocado.jl` - Creates Fig. 1
+* `scripts/paper_results.jl` - Creates Fig. 2, Table. 1
