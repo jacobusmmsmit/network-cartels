@@ -1,7 +1,8 @@
 name = "NetworkCartelDetection"
-authors = ["Martin Smit <jacobusmmsmit@gmail.com>",]
+authors = ["Martin Smit <jacobusmmsmit@gmail.com>"]
 
 [deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 ColorSchemes = "35d6a980-a343-548e-a6ea-1d62b119f2f4"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 GraphIO = "aa1b3936-2fda-51b9-ab35-c553d3a640a2"
